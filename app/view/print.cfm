@@ -18,7 +18,7 @@ querySetCell(result,"severity",session.results[i].severity);
 <!--- Queries are created named from the categories --->
 <cfloop index="k" list="#vCategories#">
 	<cfquery name="#k#" dbtype="query">
-		select directory,file,rule,message,linenumber,category,severity from result where category='#k#' order by category
+		select directory,file,rule,message,linenumber,category,severity from result where category= <cfqueryparam cfsqltype="cf_sql_char" value="#k#" /> order by category
 	</cfquery>
 </cfloop>
 
@@ -37,7 +37,7 @@ for(i=1;i<=ListLen(vCategories);i++){
 		data = Evaluate(value);
 		spreadsheet.createSheet( workbook,#LCase(value)#);
 		spreadsheet.setActiveSheet(workbook,#LCase(value)#);
-		spreadsheet.addRow(workbook=workbook, data="directory,file,rule,message,linenumber,category,severity,Developer-Assigned,Status", autoSizeColumns=true);
+		spreadsheet.addRow(workbook=workbook, data="directory,file,rule,message,linenumber,category,severity,Developer-Assigned,Status", autoSizeColumns=1);
 		spreadsheet.addRows(workbook,data);
 		}
 }
